@@ -1,0 +1,12 @@
+[submodule "LuaSnip/flask-snippets"]
+	path = LuaSnip/flask-snippets
+	url = https://github.com/cstrap/flask-snippets.git
+[submodule "LuaSnip/vscode-pyproject-toml-snippets"]
+	path = LuaSnip/vscode-pyproject-toml-snippets
+	url = https://github.com/kamilturek/vscode-pyproject-toml-snippets.git
+[submodule "LuaSnip/vscode-terraform-snippets"]
+	path = LuaSnip/vscode-terraform-snippets
+	url = https://github.com/rixrix/vscode-terraform-snippets.git
+[submodule "LuaSnip/terraform-examples"]
+	path = LuaSnip/terraform-examples
+	url = https://github.com/futurice/terraform-examples.git
