@@ -84,3 +84,12 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 require('lualine').setup()
 
+vim.filetype.add {
+  extension = {
+    jinja = 'jinja',
+    jinja2 = 'jinja',
+    j2 = 'jinja',
+  },
+}
+
+

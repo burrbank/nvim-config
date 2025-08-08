@@ -8,6 +8,7 @@ return {
         vim.lsp.enable('dockerls')
         vim.lsp.enable('zls')
         vim.lsp.enable('ccls')
+        vim.lsp.enable('jinja_lsp')
   end,
     dependencies = {
         "folke/lazydev.nvim",
