@@ -2,6 +2,7 @@ require("rhea.harpoon2")
 require("peacock").setup()
 local ls = require("luasnip")
 
+require("oil").setup()
 vim.cmd "colorscheme gruvbox"
 vim.cmd "setlocal spell spelllang=en_us mousemodel=popup"
 
@@ -38,7 +39,7 @@ local cmp = require("cmp")
 
 -- remaps
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>ex", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>ex", "<CMD>Oil<CR>")
 
 -- peacock
 local nvim_set_hl = vim.api.nvim_set_hl
