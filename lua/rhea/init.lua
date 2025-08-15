@@ -2,7 +2,7 @@ require("rhea.harpoon2")
 require("peacock").setup()
 local ls = require("luasnip")
 
-require("oil").setup()
+require("oil").setup({})
 vim.cmd "colorscheme gruvbox"
 vim.cmd "setlocal spell spelllang=en_us mousemodel=popup"
 
