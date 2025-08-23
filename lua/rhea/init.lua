@@ -2,7 +2,11 @@ require("rhea.harpoon2")
 require("peacock").setup()
 local ls = require("luasnip")
 
-require("oil").setup({})
+require("oil").setup({
+  view_options = {
+    show_hidden=true
+  }
+})
 vim.cmd "colorscheme gruvbox"
 vim.cmd "setlocal spell spelllang=en_us mousemodel=popup"
 
@@ -40,6 +44,13 @@ local cmp = require("cmp")
 -- remaps
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>ex", "<CMD>Oil<CR>")
+
+-- telescope bindings
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 -- peacock
 local nvim_set_hl = vim.api.nvim_set_hl

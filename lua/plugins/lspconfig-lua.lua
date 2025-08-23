@@ -9,6 +9,7 @@ return {
         vim.lsp.enable('zls')
         vim.lsp.enable('ccls')
         vim.lsp.enable('jinja_lsp')
+        vim.lsp.enable('gdscript')
   end,
     dependencies = {
         "folke/lazydev.nvim",
