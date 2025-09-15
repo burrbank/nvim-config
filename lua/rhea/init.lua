@@ -2,11 +2,33 @@ require("rhea.harpoon2")
 require("peacock").setup()
 local ls = require("luasnip")
 
+vim.o.foldcolumn = '2'
+vim.o.fillchars = [[eob: ,fold: ,foldopen:v,foldsep: ,foldclose:>]]
+
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
+for _, ls in ipairs(language_servers) do
+    require('lspconfig')[ls].setup({
+        capabilities = capabilities
+    })
+end
+require('ufo').setup()
+
+vim.o.background = 'dark'
+
 require("oil").setup({
   view_options = {
     show_hidden=true
   }
 })
+
 vim.cmd "colorscheme gruvbox"
 vim.cmd "setlocal spell spelllang=en_us mousemodel=popup"
 
@@ -17,6 +39,7 @@ vim.o.shiftwidth = 2 -- number of spaces when indenting
 vim.o.title = true
 vim.o.wildmenu = true
 vim.o.cursorline = true
+vim.o.relativenumber = true
 
 vim.wo.number = true -- turn on line numbers by default
 
@@ -51,6 +74,10 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+vim.keymap.set('n', '<leader>ft', ":TodoTelescope<CR>", { desc = 'Telescope todo' })
+
+-- todo
+vim.keymap.set('n', '<leader>t', ':TodoQuickFix<CR>')
 
 -- peacock
 local nvim_set_hl = vim.api.nvim_set_hl
@@ -62,7 +89,6 @@ nvim_set_hl(0, "LineNr", { link = "PeacockFg" })
 -- luasnip
 --
 local luasnip = require("luasnip")
-local cmp = require("cmp")
 
 require("luasnip.loaders.from_vscode").load({paths = {"~/.config/nvim/LuaSnip/flask-snippets"}})
 require("luasnip.loaders.from_vscode").load({paths = {"~/.config/nvim/LuaSnip/terraform-examples"}})
@@ -71,9 +97,9 @@ require("luasnip.loaders.from_vscode").load({paths = {"~/.config/nvim/LuaSnip/vs
 
 require("luasnip.loaders.from_vscode").load()
 
-vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+-- vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
+vim.keymap.set({"i", "s"}, "<C-j>", function() ls.jump( 1) end, {silent = true})
+vim.keymap.set({"i", "s"}, "<C-k>", function() ls.jump(-1) end, {silent = true})
 
 vim.keymap.set({"i", "s"}, "<C-E>", function()
     if ls.choice_active() then
@@ -104,4 +130,7 @@ vim.filetype.add {
   },
 }
 
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevel = 99
 
