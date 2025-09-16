@@ -2,25 +2,12 @@ require("rhea.harpoon2")
 require("peacock").setup()
 local ls = require("luasnip")
 
-vim.o.foldcolumn = '2'
-vim.o.fillchars = [[eob: ,fold: ,foldopen:v,foldsep: ,foldclose:>]]
-
-vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true
-}
-local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
-for _, ls in ipairs(language_servers) do
-    require('lspconfig')[ls].setup({
-        capabilities = capabilities
-    })
-end
-require('ufo').setup()
-
+vim.o.foldcolumn = '4'
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldmethod = 'expr'
+vim.o.fillchars = [[foldopen:▼,foldclose:⏵]]
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.background = 'dark'
 
 require("oil").setup({
@@ -33,7 +20,7 @@ vim.cmd "colorscheme gruvbox"
 vim.cmd "setlocal spell spelllang=en_us mousemodel=popup"
 
 vim.o.tabstop = 2 -- set tab to 4 spaces
-vim.o.expandtab = true -- insert spaces instead of tab
+vim.o.expandtab = true -- insert spaces instead of tab:
 vim.o.softtabstop = 2 -- number of spaces to insert with tab
 vim.o.shiftwidth = 2 -- number of spaces when indenting
 vim.o.title = true
@@ -129,10 +116,5 @@ vim.filetype.add {
     j2 = 'jinja',
   },
 }
-
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevel = 99
-
 
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
